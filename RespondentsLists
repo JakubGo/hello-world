@@ -1,0 +1,39 @@
+
+Sub ListyRespondentowWgListy()
+Dim listaUczestnikow, sciezkaZnazwaPlikuWzor, sciezkaDocelowa As String
+Dim wSheet As Worksheet
+Dim iRows As Long
+
+
+listaUczestnikow = InputBox("podaj nazwe pliku z listą uczestników")
+sciezkaZnazwaPlikuWzor = InputBox("wklej sciezke z nazwa pliku z wzorem pliku respondentow wlacznie")
+sciezkaDocelowa = InputBox("Wklej sciezke lokalizacji do ktorej beda zapisane listy respondentow") & "\"
+
+
+Workbooks(listaUczestnikow).Activate
+Set wSheet = ActiveWorkbook.Worksheets(1)
+iRows = wSheet.Cells(Rows.Count, 1).End(xlUp).Row
+
+Application.ScreenUpdating = False
+
+For i = 0 To iRows - 2
+Imie = Range("A2").Offset(i, 0).Value
+nazwisko = Range("B2").Offset(i, 0).Value
+
+
+Workbooks.Add sciezkaZnazwaPlikuWzor
+
+On Error Resume Next
+
+
+ActiveWorkbook.SaveAs (sciezkaDocelowa & Imie & nazwisko & "_formatka z instrukcją_respondenci do 360.xlsx")
+
+
+ActiveWorkbook.Close
+
+
+Next i
+
+Application.ScreenUpdating = True
+
+End Sub
